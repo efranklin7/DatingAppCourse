@@ -1,4 +1,6 @@
-﻿using Backend.Model;
+﻿using Backend.Interfaces;
+using Backend.Model;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -6,6 +8,7 @@ namespace Backend.Controllers
 {
     [ApiController]
     [Route("api/users")]
+    [Authorize]
     public class UsersController : ControllerBase
     {
         private readonly AppDbContext context;
@@ -14,6 +17,7 @@ namespace Backend.Controllers
         {
             this.context = context;
         }
+        [AllowAnonymous]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<User>>> get()
         {
