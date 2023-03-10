@@ -26,12 +26,11 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 app.UseCors("corsPolicy");
-app.UseAuthentication();//do you have a valid token
-app.UseAuthorization();//what can you do with the token
 
 app.UseHttpsRedirection();
 
-app.UseAuthorization();
+app.UseAuthentication();//do you have a valid token
+app.UseAuthorization();//what can you do with the token
 
 app.MapControllers();
 
