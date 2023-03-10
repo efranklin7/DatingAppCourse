@@ -1,4 +1,5 @@
 using Backend;
+using Backend.Extensions;
 using Backend.Interfaces;
 using Backend.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -14,22 +15,8 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddScoped<ITokenService, TokenService>(); // here it creates the implementation
-
-builder.Services.AddDbContext<AppDbContext>(
-    options => options.UseSqlServer(builder.Configuration.GetConnectionString("DB")));
-builder.Services.AddCors(x=>x.AddPolicy("corsPolicy",
-    build=>build.WithOrigins("http://localhost:4200").AllowAnyMethod().AllowAnyHeader()));
-
-builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(
-    options => options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
-    {
-        ValidateIssuerSigningKey= true,
-        IssuerSigningKey  = new SymmetricSecurityKey(
-            Encoding.UTF8.GetBytes(builder.Configuration["TokenKey"])),
-        ValidateIssuer=false,
-        ValidateAudience=false
-    });
+builder.Services.AddAppServices(builder.Configuration); //my class
+builder.Services.AddIdentityServices(builder.Configuration);
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
