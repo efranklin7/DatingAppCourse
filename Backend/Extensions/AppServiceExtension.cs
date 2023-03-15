@@ -17,7 +17,7 @@ namespace Backend.Extensions
             Services.AddDbContext<AppDbContext>(
                 options => options.UseSqlServer(config.GetConnectionString("DB")));
             Services.AddCors(x => x.AddPolicy("corsPolicy",
-                build => build.WithOrigins("http://localhost:4200").AllowAnyMethod().AllowAnyHeader()));
+                build => build.WithOrigins("http://localhost:4200", "https://localhost:4200").AllowAnyMethod().AllowAnyHeader()));
 
            
             return Services;
