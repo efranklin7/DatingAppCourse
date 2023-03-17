@@ -1,4 +1,5 @@
-﻿using Backend.Interfaces;
+﻿using Backend.DTOs;
+using Backend.Interfaces;
 using Backend.Model;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -34,14 +35,17 @@ namespace Backend.Controllers
             }
             return user;
         }
+        [AllowAnonymous]
+
         [HttpPost]
-        public async Task<ActionResult<User>> post(User x)
+        public async Task<ActionResult<User>> post(UserDto x)
         {
             if (x.UserName==null)
             {
                 return BadRequest("Needs a user name");
             }
-            context.Add(x);
+            var user=new User() { UserName=x.UserName};
+            context.Add(user.UserName);
             await context.SaveChangesAsync();
             return Ok();
         }
