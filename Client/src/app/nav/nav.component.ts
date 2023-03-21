@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AccountService } from '../_Services/accounts.service';
+import { IUser } from '../_Model/User';
+import { Observable, of } from 'rxjs';
 
 @Component({
   selector: 'app-nav',
@@ -8,31 +10,33 @@ import { AccountService } from '../_Services/accounts.service';
 })
 export class NavComponent implements OnInit {
   Model: any = {};
-  loggedIn: boolean = false;
-  constructor(private AccountService: AccountService) {}
+  // loggedIn: boolean = false;
+  // currentUser$: Observable<IUser | null> = of(null); // of : because it is a null obsevable
+
+  constructor(public AccountService: AccountService) {}
 
   ngOnInit(): void {
-    this.getCurrentUser();
+    //this.currentUser$ = this.AccountService.currentUser$;
   }
-  getCurrentUser() {
-    this.AccountService.currentUser$.subscribe({
-      next: (user) => (this.loggedIn = !!user), //returns true or false
-      error: (error) => console.log(error),
-    });
-  }
+  // getCurrentUser() {
+  //   this.AccountService.currentUser$.subscribe({
+  //     next: (user) => (this.loggedIn = !!user), // (this.loggedIn = user ? true : false),  returns true or false
+  //     error: (error) => console.log(error),
+  //   });
+  // }
 
   login() {
     this.AccountService.login(this.Model).subscribe({
       next: (Response) => {
         console.log(Response);
         console.log(this.Model);
-        this.loggedIn = true;
+        // this.loggedIn = true;
       },
       error: (error) => console.log(error),
     });
   }
   logout() {
     this.AccountService.logout();
-    this.loggedIn = false;
+    //this.loggedIn = false;
   }
 }
