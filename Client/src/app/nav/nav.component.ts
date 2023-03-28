@@ -10,6 +10,8 @@ import { Observable, of } from 'rxjs';
 })
 export class NavComponent implements OnInit {
   Model: any = {};
+
+  isCollapsed = true;
   // loggedIn: boolean = false;
   // currentUser$: Observable<IUser | null> = of(null); // of : because it is a null obsevable
 
