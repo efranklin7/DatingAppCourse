@@ -1,21 +1,11 @@
 <form #registerForm="ngForm" (ngSubmit)="register()" autocomplete="off">
   <h2 class="text-center text-primary mb-3">Sign Up</h2>
-  <div class="mb-3">
-    <select class="form-select">
-      <option
-        *ngFor="let users of usersFromHomeComponent"
-        [value]="users.userName"
-      >
-        {{ users.userName }}
-      </option>
-    </select>
-  </div>
   <div>
     <input
       class="form-control"
-      [(ngModel)]="model.name"
+      [(ngModel)]="model.userName"
       type="text"
-      name="user"
+      name="username"
       id=""
       placeholder="Name"
     />
@@ -23,11 +13,11 @@
   <div>
     <input
       class="form-control"
-      [(ngModel)]="model.email"
-      type="email"
-      name="email"
+      [(ngModel)]="model.password"
+      type="text"
+      name="password"
       id=""
-      placeholder="Email"
+      placeholder="Password"
     />
   </div>
   <div class="text-center">
