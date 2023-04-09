@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { AccountService } from '../_Services/accounts.service';
 import { IUser } from '../_Model/User';
 import { Observable, of } from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-nav',
@@ -15,10 +17,30 @@ export class NavComponent implements OnInit {
   // loggedIn: boolean = false;
   // currentUser$: Observable<IUser | null> = of(null); // of : because it is a null obsevable
 
-  constructor(public AccountService: AccountService) {}
+  constructor(
+    public AccountService: AccountService,
+    private router: Router,
+    private toastr: ToastrService
+  ) {}
 
   ngOnInit(): void {
     //this.currentUser$ = this.AccountService.currentUser$;
+  }
+  login() {
+    this.AccountService.login(this.Model).subscribe({
+      next: () => this.router.navigateByUrl('/members'),
+
+      error: (error) => {
+        console.log(error);
+        this.toastr.error(error.error);
+      },
+    });
+  }
+  logout() {
+    this.AccountService.logout();
+    this.router.navigateByUrl('/');
+
+    //this.loggedIn = false;
   }
   // getCurrentUser() {
   //   this.AccountService.currentUser$.subscribe({
@@ -26,19 +48,4 @@ export class NavComponent implements OnInit {
   //     error: (error) => console.log(error),
   //   });
   // }
-
-  login() {
-    this.AccountService.login(this.Model).subscribe({
-      next: (Response) => {
-        console.log(Response);
-        console.log(this.Model);
-        // this.loggedIn = true;
-      },
-      error: (error) => console.log(error),
-    });
-  }
-  logout() {
-    this.AccountService.logout();
-    //this.loggedIn = false;
-  }
 }
