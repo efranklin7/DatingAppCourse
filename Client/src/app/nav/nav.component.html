@@ -35,11 +35,13 @@
     <div>
       <div
         class="dropdown"
-        *ngIf="AccountService.currentUser$ | async"
+        *ngIf="AccountService.currentUser$ | async as IUser"
         dropdown
       >
-        <a dropdownToggle class="dropdown-toggle text-dark pointer"
-          >Welcome User</a
+        <a
+          dropdownToggle
+          class="dropdown-toggle text-dark pointer text-decoration-none"
+          >Welcome {{ IUser.userName | titlecase }}</a
         >
         <div class="dropdown-menu" *dropdownMenu>
           <a role="menuitem" class="dropdown-item" href="#">Edit Profile</a>
